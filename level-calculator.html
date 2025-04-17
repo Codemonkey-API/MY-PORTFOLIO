@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Web Apps</title>
+  <link rel="stylesheet" href="calc.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c7f084090e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>Level Calculator</h1>
+
+  <div class="calculator">
+    <input type="number" id="levelInput" placeholder="Enter level" />
+    <br>
+    <button onclick="calculate()">Calculate</button>
+    <div class="result" id="resultText"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      const level = parseInt(document.getElementById('levelInput').value);
+      const resultText = document.getElementById('resultText');
+
+      if (isNaN(level)) {
+        resultText.textContent = 'Please enter a valid number.';
+        return;
+      }
+
+      // Example calculation (you can change the logic)
+      const xp = level * level * 100;
+
+      resultText.textContent = `XP required: ${xp}`;
+    }
+  </script>
+
+ 
+
+  <footer>
+    <a href="web-apps.html" class="back-button"> Back</a>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Web Apps</title>
+  <link rel="stylesheet" href="weather.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c7f084090e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <!-- Weather UI -->
+     <section id="weather-app">
+      <h1>Weather App</h1>
+      <input type="text" id="cityInput" placeholder="Enter city" />
+      <button onclick="getWeather()">Check Weather</button>
+      <div id="weatherResult"></div>
+    
+     </section>
+  
+  <!-- Script goes here -->
+  <script>
+    const apiKey = "813aa0bd7609441405436003c99bc5c0";
+
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      const resultDiv = document.getElementById('weatherResult');
+
+      if (!city) {
+        resultDiv.innerHTML = "Please enter a city.";
+        return;
+      }
+
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.cod !== 200) {
+          resultDiv.innerHTML = "City not found.";
+          return;
+        }
+
+        const weather = data.weather[0];
+        const iconUrl = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
+
+        resultDiv.innerHTML = `
+          <div>${data.name}, ${data.sys.country}</div>
+          <div>🌡️ ${data.main.temp}°C</div>
+          <div>${weather.main} - ${weather.description}</div>
+          <img class="weather-icon" src="${iconUrl}" alt="${weather.description}">
+        `;
+      } catch (error) {
+        console.error(error);
+        resultDiv.innerHTML = "Error fetching weather.";
+      }
+    }
+  </script>
+</body>
+<footer>
+    <a href="index.html" class="back"> Back</a>
+  </footer>
+</html>
